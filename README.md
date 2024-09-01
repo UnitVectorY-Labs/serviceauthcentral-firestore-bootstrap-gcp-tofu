@@ -23,4 +23,44 @@ module "serviceauthcentral_firestore_bootstrap_gcp" {
 ```
 
 <!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 5.0.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_google"></a> [google](#provider\_google) | >= 5.0.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [google_firestore_document.authorization_document](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/firestore_document) | resource |
+| [google_firestore_document.issuer_document](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/firestore_document) | resource |
+| [random_string.issuer_salt](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
+| [time_static.created_timestamp](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/static) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_authorized_user_clientid"></a> [authorized\_user\_clientid](#input\_authorized\_user\_clientid) | The authorized user client | `string` | n/a | yes |
+| <a name="input_database_name"></a> [database\_name](#input\_database\_name) | The name of the database | `string` | `"default"` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project id | `string` | n/a | yes |
+| <a name="input_sac_issuer"></a> [sac\_issuer](#input\_sac\_issuer) | The issuer for ServiceAuthCentral | `string` | n/a | yes |
+
+## Outputs
+
+No outputs.
 <!-- END_TF_DOCS -->

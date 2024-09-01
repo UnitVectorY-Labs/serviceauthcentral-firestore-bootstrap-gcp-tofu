@@ -4,6 +4,12 @@
 
 OpenTofu module for deploying ServiceAuthCentral Firestore Bootstrap Records
 
+## Firestore Records
+
+This creates the minimum number of Firestore records to be able to log into ServiceAuthCentral.  This is the client record for the issuer which is the actual system itself where the clientId is the issuer.
+
+Additionally a record is needed to authorize the first user so they can log into the administrative web portal.
+
 ## Usage
 
 ```hcl

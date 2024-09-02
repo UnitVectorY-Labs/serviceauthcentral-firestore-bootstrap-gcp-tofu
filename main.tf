@@ -33,6 +33,7 @@ locals {
     description   = { stringValue = "Issuer" }
     salt          = { stringValue = random_string.issuer_salt.result }
     # jwtBearer     = { arrayValue = { values = [] } }
+    locked        = { booleanValue = true }
   })
 
   # The authorization document for Firestore
@@ -40,6 +41,7 @@ locals {
     audience             = { stringValue = var.sac_issuer }
     subject              = { stringValue = var.authorized_user_clientid }
     authorizationCreated = { stringValue = time_static.created_timestamp.rfc3339 }
+    locked               = { booleanValue = true }
   })
 
   # The workload federation identity document for Firestore (clientId)
@@ -52,6 +54,7 @@ locals {
     description   = { stringValue = "GCP Workload Federation Identity" }
     salt          = { stringValue = random_string.workload_federation_identity_salt.result }
     # jwtBearer     = { arrayValue = { values = [] } }
+    locked        = { booleanValue = true }
   })
 
 }

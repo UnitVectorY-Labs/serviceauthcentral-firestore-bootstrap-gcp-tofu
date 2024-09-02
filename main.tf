@@ -65,7 +65,7 @@ resource "google_firestore_document" "issuer_document" {
 }
 
 resource "google_firestore_document" "authorization_document" {
-  count       = authorized_user_clientid != "" ? 1 : 0
+  count       = var.authorized_user_clientid != "" ? 1 : 0
   project     = var.project_id
   database    = var.database_name
   collection  = "authorizations"
@@ -74,7 +74,7 @@ resource "google_firestore_document" "authorization_document" {
 }
 
 resource "google_firestore_document" "workload_federation_identity_document" {
-  count       = workload_federation_identity != "" ? 1 : 0
+  count       = var.workload_federation_identity != "" ? 1 : 0
   project     = var.project_id
   database    = var.database_name
   collection  = "clients"

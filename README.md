@@ -10,6 +10,8 @@ This creates the minimum number of Firestore records to be able to log into Serv
 
 Additionally a record is needed to authorize the first user so they can log into the administrative web portal.
 
+A record for the Workload Identity Pool can also be created to allow the Workload Identity Pool to authenticate to the ServiceAuthCentral.
+
 ## Usage
 
 ```hcl

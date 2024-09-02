@@ -8,12 +8,20 @@ resource "random_string" "issuer_salt" {
   special          = false
 }
 
+# Create a random string for the workload federation identity salt
+resource "random_string" "workload_federation_identity_salt" {
+  length           = 32
+  special          = false
+}
+
 locals {
   # ServiceAuthCentral client records have a document id of the SHA-256 hash of the clientId
   issuer_hash = sha256(var.sac_issuer)
   user_hash  = sha256(var.authorized_user_clientid)
   # ServiceAuthCentral authorization records have a document id of the SHA-256 hash of the subject and audience document ids concatenated
   authorization_hash = sha256(format("%s%s",local.user_hash, local.issuer_hash))
+  # GCP Workload Federation Identity client records have a document id of the SHA-256 hash of the clientId
+  workload_federation_identity_hash = sha256(var.workload_federation_identity)
 
   # The issuer document for Firestore
   issuer_document_json = jsonencode({
@@ -33,6 +41,19 @@ locals {
     subject              = { stringValue = var.authorized_user_clientid }
     authorizationCreated = { stringValue = time_static.created_timestamp.rfc3339 }
   })
+
+  # The workload federation identity document for Firestore (clientId)
+  workload_federation_identity_document_json = jsonencode({
+    clientId      = { stringValue = var.workload_federation_identity }
+    clientCreated = { stringValue = time_static.created_timestamp.rfc3339 }
+    clientType    = { stringValue = "APPLICATION" }
+    # clientSecret1 = { nullValue = null }
+    # clientSecret2 = { nullValue = null }
+    description   = { stringValue = "GCP Workload Federation Identity" }
+    salt          = { stringValue = random_string.workload_federation_identity_salt.result }
+    # jwtBearer     = { arrayValue = { values = [] } }
+  })
+
 }
 
 resource "google_firestore_document" "issuer_document" {
@@ -44,9 +65,19 @@ resource "google_firestore_document" "issuer_document" {
 }
 
 resource "google_firestore_document" "authorization_document" {
+  count       = authorized_user_clientid != "" ? 1 : 0
   project     = var.project_id
   database    = var.database_name
   collection  = "authorizations"
   document_id = local.authorization_hash
   fields      = local.authorization_document_json
+}
+
+resource "google_firestore_document" "workload_federation_identity_document" {
+  count       = workload_federation_identity != "" ? 1 : 0
+  project     = var.project_id
+  database    = var.database_name
+  collection  = "clients"
+  document_id = local.workload_federation_identity_hash
+  fields      = local.workload_federation_identity_document_json
 }

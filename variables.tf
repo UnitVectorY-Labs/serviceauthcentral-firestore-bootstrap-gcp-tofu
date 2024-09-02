@@ -23,4 +23,11 @@ variable "sac_issuer" {
 variable "authorized_user_clientid" {
   description = "The authorized user client"
   type        = string
+  default     = "" # Default of "" means that the record will not be created
+}
+
+variable "workload_federation_identity" {
+  description = "The workload federation identity"
+  type        = string
+  default     = "" # Default of "" means that the record will not be created
 }

@@ -6,11 +6,11 @@ OpenTofu module for deploying ServiceAuthCentral Firestore Bootstrap Records
 
 ## Firestore Records
 
-This creates the minimum number of Firestore records to be able to log into ServiceAuthCentral.  This is the client record for the issuer which is the actual system itself where the clientId is the issuer.
+This module sets up the essential Firestore records needed to enable login functionality for ServiceAuthCentral. Specifically, it creates a client record for the issuer, which represents the system itself, with the clientId being the same as the issuer.
 
-Additionally a record is needed to authorize the first user so they can log into the administrative web portal.
+In addition, a record is created to authorize the initial user, granting them access to log into the administrative web portal.
 
-A record for the Workload Identity Pool can also be created to allow the Workload Identity Pool to authenticate to the ServiceAuthCentral.
+Optionally, you can also create a record for a GCP Workload Identity Pool, enabling it to authenticate with ServiceAuthCentral.
 
 ## Usage
 
@@ -50,17 +50,20 @@ No modules.
 |------|------|
 | [google_firestore_document.authorization_document](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/firestore_document) | resource |
 | [google_firestore_document.issuer_document](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/firestore_document) | resource |
+| [google_firestore_document.workload_federation_identity_document](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/firestore_document) | resource |
 | [random_string.issuer_salt](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
+| [random_string.workload_federation_identity_salt](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [time_static.created_timestamp](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/static) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_authorized_user_clientid"></a> [authorized\_user\_clientid](#input\_authorized\_user\_clientid) | The authorized user client | `string` | n/a | yes |
+| <a name="input_authorized_user_clientid"></a> [authorized\_user\_clientid](#input\_authorized\_user\_clientid) | The authorized user client | `string` | `""` | no |
 | <a name="input_database_name"></a> [database\_name](#input\_database\_name) | The name of the database | `string` | `"default"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project id | `string` | n/a | yes |
 | <a name="input_sac_issuer"></a> [sac\_issuer](#input\_sac\_issuer) | The issuer for ServiceAuthCentral | `string` | n/a | yes |
+| <a name="input_workload_federation_identity"></a> [workload\_federation\_identity](#input\_workload\_federation\_identity) | The workload federation identity | `string` | `""` | no |
 
 ## Outputs
 

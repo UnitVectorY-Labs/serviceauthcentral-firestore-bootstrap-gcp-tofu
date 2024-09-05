@@ -34,6 +34,16 @@ locals {
     salt          = { stringValue = random_string.issuer_salt.result }
     # jwtBearer     = { arrayValue = { values = [] } }
     locked        = { booleanValue = true }
+    availableScopes = { arrayValue = { values = [
+    { mapValue = { fields = {
+      description = { stringValue = "Read access to ServiceAuthCentral" }
+      scope       = { stringValue = "Read" }
+    }}},
+    { mapValue = { fields = {
+      description = { stringValue = "Administrative access to ServiceAuthCentral" }
+      scope       = { stringValue = "Admin" }
+    }}}
+  ]}}
   })
 
   # The authorization document for Firestore

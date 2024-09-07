@@ -2,7 +2,7 @@
 
 # serviceauthcentral-firestore-bootstrap-gcp-tofu
 
-OpenTofu module for deploying ServiceAuthCentral Firestore Bootstrap Records
+OpenTofu module for deploying ServiceAuthCentral Firestore records needed to bootstrap an install
 
 ## Firestore Records
 

@@ -4,13 +4,12 @@
 
 OpenTofu module for deploying ServiceAuthCentral Firestore records needed to bootstrap an install
 
-## Firestore Records
+## References
 
-This module sets up the essential Firestore records needed to enable login functionality for ServiceAuthCentral. Specifically, it creates a client record for the issuer, which represents the system itself, with the clientId being the same as the issuer.
-
-In addition, a record is created to authorize the initial user, granting them access to log into the administrative web portal.
-
-Optionally, you can also create a record for a GCP Workload Identity Pool, enabling it to authenticate with ServiceAuthCentral.
+- [ServiceAuthCentral](https://github.com/UnitVectorY-Labs/ServiceAuthCentral) - Simplify microservice security with ServiceAuthCentral: Centralized, open-source authorization in the cloud, minus the shared secrets.
+- [ServiceAuthCentral Documentation](https://unitvectory-labs.github.io/ServiceAuthCentral/) - Documentation for ServiceAuthCentral
+- [serviceauthcentralweb](https://github.com/UnitVectorY-Labs/serviceauthcentralweb) - Web based management interface for ServiceCloudAuth
+- [serviceauthcentral-gcp-tofu](https://github.com/UnitVectorY-Labs/serviceauthcentral-gcp-tofu) - OpenTofu module for deploying a fully working ServiceAuthCentral deployment in GCP
 
 ## Usage
 
@@ -23,6 +22,14 @@ module "serviceauthcentral_firestore_bootstrap_gcp" {
     authorized_user_clientid = "user:example:clientid"
 }
 ```
+
+## Firestore Records
+
+This module sets up the essential Firestore records needed to enable login functionality for ServiceAuthCentral. Specifically, it creates a client record for the issuer, which represents the system itself, with the clientId being the same as the issuer.
+
+In addition, a record is created to authorize the initial user, granting them access to log into the administrative web portal.
+
+Optionally, you can also create a record for a GCP Workload Identity Pool, enabling it to authenticate with ServiceAuthCentral.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

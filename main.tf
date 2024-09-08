@@ -4,22 +4,22 @@ resource "time_static" "created_timestamp" {}
 
 # Create a random string for the issuer salt
 resource "random_string" "issuer_salt" {
-  length           = 32
-  special          = false
+  length  = 32
+  special = false
 }
 
 # Create a random string for the workload federation identity salt
 resource "random_string" "workload_federation_identity_salt" {
-  length           = 32
-  special          = false
+  length  = 32
+  special = false
 }
 
 locals {
   # ServiceAuthCentral client records have a document id of the SHA-256 hash of the clientId
   issuer_hash = sha256(var.sac_issuer)
-  user_hash  = sha256(var.authorized_user_clientid)
+  user_hash   = sha256(var.authorized_user_clientid)
   # ServiceAuthCentral authorization records have a document id of the SHA-256 hash of the subject and audience document ids concatenated
-  authorization_hash = sha256(format("%s%s",local.user_hash, local.issuer_hash))
+  authorization_hash = sha256(format("%s%s", local.user_hash, local.issuer_hash))
   # GCP Workload Federation Identity client records have a document id of the SHA-256 hash of the clientId
   workload_federation_identity_hash = sha256(var.workload_federation_identity)
 
@@ -30,20 +30,20 @@ locals {
     clientType    = { stringValue = "APPLICATION" }
     # clientSecret1 = { nullValue = null }
     # clientSecret2 = { nullValue = null }
-    description   = { stringValue = "Issuer" }
-    salt          = { stringValue = random_string.issuer_salt.result }
+    description = { stringValue = "Issuer" }
+    salt        = { stringValue = random_string.issuer_salt.result }
     # jwtBearer     = { arrayValue = { values = [] } }
-    locked        = { booleanValue = true }
+    locked = { booleanValue = true }
     availableScopes = { arrayValue = { values = [
-    { mapValue = { fields = {
-      description = { stringValue = "Read access to ServiceAuthCentral" }
-      scope       = { stringValue = "Read" }
-    }}},
-    { mapValue = { fields = {
-      description = { stringValue = "Administrative access to ServiceAuthCentral" }
-      scope       = { stringValue = "Admin" }
-    }}}
-  ]}}
+      { mapValue = { fields = {
+        description = { stringValue = "Read access to ServiceAuthCentral" }
+        scope       = { stringValue = "Read" }
+      } } },
+      { mapValue = { fields = {
+        description = { stringValue = "Administrative access to ServiceAuthCentral" }
+        scope       = { stringValue = "Admin" }
+      } } }
+    ] } }
   })
 
   # The authorization document for Firestore
@@ -61,10 +61,10 @@ locals {
     clientType    = { stringValue = "APPLICATION" }
     # clientSecret1 = { nullValue = null }
     # clientSecret2 = { nullValue = null }
-    description   = { stringValue = "GCP Workload Federation Identity" }
-    salt          = { stringValue = random_string.workload_federation_identity_salt.result }
+    description = { stringValue = "GCP Workload Federation Identity" }
+    salt        = { stringValue = random_string.workload_federation_identity_salt.result }
     # jwtBearer     = { arrayValue = { values = [] } }
-    locked        = { booleanValue = true }
+    locked = { booleanValue = true }
   })
 
 }

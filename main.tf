@@ -52,6 +52,9 @@ locals {
     subject              = { stringValue = var.authorized_user_clientid }
     authorizationCreated = { stringValue = time_static.created_timestamp.rfc3339 }
     locked               = { booleanValue = true }
+    authorizedScopes = { arrayValue = { values = [
+      { stringValue = "Admin" }
+    ] } }
   })
 
   # The workload federation identity document for Firestore (clientId)
